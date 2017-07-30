@@ -99,6 +99,7 @@
         if(document.getElementById("passwd").value != document.getElementById("passwd2").value) {
              document.getElementById("messageBox").innerHTML = "Podane hasła różnią się!";
         }
+
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -106,11 +107,12 @@
             // code for IE6, IE5
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
+
         formData = new FormData(document.getElementById("addUser"));
         
         xmlhttp.open("POST","addUser.php",true);
 
-        xmlhttp.send(checkBoxes_formData);
+        xmlhttp.send(formData);
 
         xmlhttp.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
@@ -138,7 +140,7 @@
                 <input type="button" name="submit" value="Wyślij" onclick="adduser(this)"/>   
             </div>
         </form>
-        <div id="messageBox"></div>
+        <div id="messageBox" class="question">MSG</div>
     </div>
     </body>
 </html>
