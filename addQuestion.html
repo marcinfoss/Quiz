@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Quizzer! - zgłoś pytanie!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/app.css">
+    <script>
+
+/* example from https://stackoverflow.com/questions/9713058/send-post-data-using-xmlhttprequest
+var http = new XMLHttpRequest();
+var url = "get_data.php";
+var params = "lorem=ipsum&name=binny";
+http.open("POST", url, true);
+
+//Send the proper header information along with the request
+http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+
+http.onreadystatechange = function() {//Call a function when the state changes.
+    if(http.readyState == 4 && http.status == 200) {
+        alert(http.responseText);
+    }
+}
+http.send(params);
+*/
+
+function addQuestion() {
+        
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    checkBoxes_formData = new FormData(document.getElementById("addQ"));
+    xmlhttp.open("POST","addQuestion.php",true);
+   // xmlhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+
+    xmlhttp.send(checkBoxes_formData);
+
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            data= this.responseText;               
+            document.getElementById("messageBox").innerHTML = data;
+        }
+    };
+
+}
+
+    </script>
+  </head>
+<body>
+    <form id="addQ">    
+        <table>
+                <tr>
+                    <th>Pytanie</th>
+                    <td><input type="text" name="pytanie" id="pytanie"/></td>
+                </tr>
+                <tr>
+                    <th>Kategoria</th>
+                    <td><input type="text" name="kategoria" id="kategoria"/></td>
+                </tr>
+                <tr>
+                    <th>Podpowiedź 1 (najtrudniejsza):</th>
+                    <td><input type="textarea" name="hint1" id="hint1"/></td>
+                </tr>
+                <tr>
+                    <th>Podpowiedź 2 (średnia):</th>
+                    <td><input type="textarea" name="hint2" id="hint2"/></td>
+                </tr>
+                <tr>
+                    <th>Podpowiedź 1 (najłatwiejsza):</th>
+                    <td><input type="textarea" name="hint3" id="hint3"/></td>
+                </tr>
+                <tr>
+                    <th>Odpowiedź PRAWIDŁOWA:</th>
+                    <td><input type="textarea" name="answer" id="answer"/></td>
+                </tr>
+                <tr>
+                    <th>Odpowiedź BŁĘDNA 1:</th>
+                    <td><input type="textarea" name="wrong_answer1" id="wrong_answer1"/></td>
+                </tr>
+                <tr>
+                    <th>Odpowiedź BŁĘDNA 2:</th>
+                    <td><input type="textarea" name="wrong_answer2" id="wrong_answer2"/></td>
+                </tr>
+                <tr>
+                    <th>Odpowiedź BŁĘDNA 1:</th>
+                    <td><input type="textarea" name="wrong_answer3" id="wrong_answer3"/></td>
+                </tr>
+                
+        </table>
+    </form>
+        <div class="buttonDiv" id="sendButtonDiv">
+            <input type="button" id="sendButton" onclick="addQuestion(this)"/ value="wyślij!"/>
+        </div>
+<div id="messageBox"></div>
+
+</body>
+</html>

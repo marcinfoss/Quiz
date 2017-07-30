@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+
+    <title>Quizzer!</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width">
+
+    <link rel="stylesheet" href="css/app.css">
+    <script>
+
+    var hint = [];
+    var answer = [];
+    var question_id;
+    var question_text;
+    var question_category;
+    var hint1;
+    var hint2;
+    var hint3;
+    var timer;
+    var score = 0;
+    var FPS = 30;
+    var firstHintTime = 3;
+    var hintTime = 30; //time after which next hint is shown
+    var progressBase;
+
+    var hint1_shown = false;
+    var hint2_shown = false;
+    var hint3_shown = false;
+    var gameTime = 0;
+    var answered = false;
+    var timer1;
+    var answers_buttons;
+    var HINT1_SCORE = 5;
+    var HINT2_SCORE = 3;
+    var HINT3_SCORE = 1;
+    var message_box;
+    var nextButtonDiv;
+    var nextButton;
+    var button1;
+    var button2;
+    var button3;
+    var button4;
+    var scoreDiv;
+    var lastScore = 0;
+
+    var progressBar;
+    var progressBarWidth = 0;
+    var progressBarSub = 0;
+    var nextHintText;
+
+    var wrapper;
+    var lastAnswer;
+
+    //shuffling answer buttons
+         
+                
+        function shuffle(items){
+            var cached = items.slice(0), temp, i = cached.length, rand;
+            
+            while(--i) {              
+                rand = Math.floor(i * Math.random());
+                temp = cached[rand];
+                cached[rand] = cached[i];
+                cached[i] = temp;
+            }
+            return cached;
+        }
+
+        function shuffleNodes(){
+            
+            var nodes = answers_buttons.children, i = 0;
+            nodes = Array.prototype.slice.call(nodes);
+            nodes = shuffle(nodes);
+            while(i < nodes.length){
+                answers_buttons.appendChild(nodes[i]);
+                ++i;
+            }
+        }
+
+    //end shuffling answer buttons
+
+    function clean(){
+        FPS = 30;
+
+        progressBarSub = 0;
+        progressBase = firstHintTime;
+
+        hint1_shown = false;
+        hint2_shown = false;
+        hint3_shown = false;
+        gameTime = 0;
+        answered = false;
+        
+        
+        hint1.className  = "hidden";
+        hint2.className  = "hidden";
+        hint3.className  = "hidden";
+
+       
+        //nextButtonDiv.style.display="none";
+        message_box.className  = "hidden";
+        answers_buttons.className ="answer";
+        nextHintText.className  = "question";
+        
+
+        
+        progressBase = firstHintTime;
+    }
+
+    function getQuestion() {
+        
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+
+                data= JSON.parse(this.responseText);
+
+                question_id = data[0];
+                question_text = data[1];
+                question_category = data[2];
+                
+                hint[0] = data[3];
+                hint[1] = data[4];
+                hint[2] = data[5];
+
+                answer[0] = data[6];
+                answer[1]= data[7];
+                answer[2] = data[8];
+                answer[3] = data[9];
+
+                document.getElementById("question_number").innerHTML = question_id;
+                document.getElementById("question_category").innerHTML ="Kategoria: "+question_category;
+                document.getElementById("question_text").innerHTML = question_text;
+
+                
+                
+                
+                
+                button1.innerHTML = answer[0];
+                button1.value= answer[0];
+                button2.innerHTML = answer[1];
+                button2.value= answer[1];
+                button3.innerHTML = answer[2];
+                button3.value= answer[2];
+                button4.innerHTML = answer[3];
+                button4.value= answer[3];
+                nextButtonDiv.className  = 'hidden';
+                //nextButtonDiv.hide();
+                hint1.className  = "hidden";
+            hint2.className  = "hidden";
+            hint3.className  = "hidden";
+                //timer = document.getElementById('timer');
+
+                timer1 = setInterval(function(){
+
+            //progress bar
+                progressBar = document.getElementById("progressBar");
+                progress = (gameTime/FPS) - progressBarSub;
+
+                
+
+                width = progress*100 / progressBase;
+
+                        
+                progressBar.style.width = width + '%';
+                 
+
+
+            //end progress bar        
+
+
+
+            if( (gameTime/FPS > firstHintTime) && !hint1_shown) {
+                 hint1.className ="hint";
+                 hint1_shown = true;
+                 message_box.className ="hidden";
+                 progressBarSub = firstHintTime ;
+                 progressBase = hintTime;
+                 hint1.innerHTML = "(5 pkt) " + hint[0];
+                 }
+            if( (gameTime/FPS > (hintTime + firstHintTime)) && !hint2_shown) {
+                 hint2.className ="hint";
+                 hint2_shown = true;
+                 progressBarSub = firstHintTime+ hintTime;
+                 progressBase = hintTime;
+                 hint2.innerHTML = "(3 pkt) " +  hint[1];                 
+                 }
+            if( (gameTime/FPS > (hintTime * 2 + firstHintTime)) && !hint3_shown) {
+                hint3.className ="hint";
+                hint3_shown = true;
+                nextHintText.className ="hidden";
+                hint3.innerHTML = "(1 pkt) " +  hint[2];
+                }
+            if( hint3_shown) {
+                progressBar.style.width = "100%";
+                clearInterval(timer1);
+                //myBar.style.display= "none";
+            }
+            if(!hint3_shown) {
+                 gameTime++;
+            }
+
+           // timer.innerHTML = "Time: " + gameTime/FPS;
+            scoreDiv.innerHTML = "Punkty: "+ score + " za ostatnie pytanie: "+lastScore;
+        }, 1000/FPS);
+            }
+        };
+        xmlhttp.open("GET","getQuestion.php",true);
+        xmlhttp.send();
+
+    }
+
+
+
+    function stop(element) {
+     
+        clearInterval(timer1);
+
+        message_box.className ="message";
+        answers_buttons.className ="hidden";
+        lastAnswer = element.value;
+        if(lastAnswer == answer[0]) {
+            
+            if(!hint2_shown) {
+                score += HINT1_SCORE;
+                lastScore = HINT1_SCORE;
+            } else if(!hint3_shown) {
+                score += HINT2_SCORE;
+                lastScore = HINT2_SCORE;
+            } else {
+                score += HINT3_SCORE;
+                lastScore = HINT3_SCORE;
+            }
+
+            message_box.innerHTML= "Zaznaczono: "+ lastAnswer + ". Gratulacje! Zdobyte punkty: " + lastScore;
+            message_box.style.backgroundColor="green";
+
+        } else {
+            message_box.innerHTML="Zaznaczono: "+ lastAnswer + ". Niestety, błędna odpowiedź!";
+            message_box.style.backgroundColor="red";
+            lastScore = 0;
+
+        }
+       nextButtonDiv.className  = 'nextButton';
+
+    }
+        
+    function start(){
+        clean();
+        shuffleNodes();
+        getQuestion();
+
+    }
+
+    window.onload = function(){
+        message_box = document.getElementById("message");
+        nextButtonDiv = document.getElementById("nextButtonDiv");
+        hint1 = document.getElementById('hint1');
+        hint2 = document.getElementById('hint2');
+        hint3 = document.getElementById('hint3');
+        button1 = document.getElementById('answer1');
+        button2 = document.getElementById('answer2');
+        button3 = document.getElementById('answer3');
+        button4 = document.getElementById('answer4');
+        answers_buttons = document.getElementById('answers_buttons');
+        scoreDiv = document.getElementById('score');
+        nextHintText = document.getElementById('nextHintText'); 
+        wrapper = document.getElementById('wrapper');
+
+        
+        start();
+        score=0;
+    
+    }   
+    </script>
+  </head>
+
+  <body>
+<div class="wrapper" id="wrapper">
+    <div class="header">Quizzer!</div>
+    <div id="score"></div>
+    <div class="question">
+        <span class="question_number" id="question_number"></span>
+        <span class="question_category" id="question_category"></span>
+        <span class="question_text" id="question_text"></span>
+    </div>
+    <div class="answer" id="answers_buttons">
+        <button class="button" id="answer1" onclick="stop(this)"></button>
+        <button class="button" id="answer2" onclick="stop(this)"></button>
+        <button class="button" id="answer3" onclick="stop(this)"></button>
+        <button class="button" id="answer4" onclick="stop(this)"></button>
+    </div>
+    <div class="hints">  
+        <div class="hint" id="hint1"></div>
+        <div class="hint" id="hint2"></div>
+        <div class="hint" id="hint3"></div>
+    </div>
+    <div class="question" id="nextHintText">
+            Następna podpowiedź za...
+    </div>
+    <div class="question" id="myProgress">
+         <div id="progressBar"></div>
+    </div>
+
+
+    <div id="message" class="question"></div>
+    <div class="nextbutton" id="nextButtonDiv">
+        <button class="button" id="nextButton" onclick="start(this)">Następne pytanie!</button>
+    </div>
+</div>
+  </body>
+</html>
