@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #236167;
-    color: #f2f2f2;
+    color: #8a97a0;
 
 }
 
@@ -10,8 +10,8 @@ html, body {
     margin: auto;
     width: 100%;
     font-size: 3em;
-    background-color: #68979B;
-    color: #f2f2f2;
+    background-color: #f4f7f8;
+    color: #8a97a0;
     padding:10px;
    
     border-radius: 10px;
@@ -27,8 +27,8 @@ html, body {
     margin-top:25px;
     width: 100%;
     font-size: 1em;
-    background-color: #68979B;
-    color: #f2f2f2;
+    background-color: #f4f7f8;
+    color: #8a97a0;
     padding:10px;
 
     border-radius: 10px;
@@ -57,8 +57,8 @@ html, body {
     margin-top: 25px;
     width: 100%;
     font-size: 1.5em;
-    background-color: #68979B;
-    color: #f2f2f2;
+    background-color: #f4f7f8;
+    color: #8a97a0;
     padding:10px;
     border-radius: 10px;
 }
@@ -68,8 +68,8 @@ html, body {
     margin-top: 25px;
     width: 100%;
     font-size: 1.5em;
-    background-color: #68979B;
-    color: #f2f2f2;
+    background-color: #f4f7f8;
+    color: #8a97a0;
     padding:10px;
     border-radius: 10px;
 
@@ -95,7 +95,7 @@ html, body {
         border: 3px;
         border-color:#804715;
         border-style: solid;
-        color: #f2f2f2;
+        color: #8a97a0;
         border-radius:10px;
         flex:1;
 }

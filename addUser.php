@@ -12,6 +12,9 @@ if ($conn->connect_error) {
 }
 mysqli_set_charset($conn,"utf8");
 
+$name = $_POST['name'];
+$mail = $_POST['mail'];
+$passwd = test_input($_POST['passwd']);
 
 mysqli_close($conn);
 ?>

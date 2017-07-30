@@ -95,7 +95,10 @@
     </style>
     <script>
         function adduser() {
-            
+        
+        if(document.getElementById("passwd").value != document.getElementById("passwd2").value) {
+             document.getElementById("messageBox").innerHTML = "Podane hasła różnią się!";
+        }
         if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
@@ -103,7 +106,8 @@
             // code for IE6, IE5
             xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        checkBoxes_formData = new FormData(document.getElementById("addUser"));
+        formData = new FormData(document.getElementById("addUser"));
+        
         xmlhttp.open("POST","addUser.php",true);
 
         xmlhttp.send(checkBoxes_formData);
@@ -129,7 +133,9 @@
                 <legend><span class="number">*</span>Rejestracja</legend>
                 <input type="text" name="name" placeholder="Twoje imię:" />
                 <input type="text" name="mail" placeholder="Twój adres e-mail:" />
-                <input type="button" name="submit" value="Wyślij" onclick=""/>   
+                <input type="text" name="passwd" id="passwd" placeholder="Twoje hasło" />
+                <input type="text" name="passwd2" id="passwd2" placeholder="Powtórz hasło" />
+                <input type="button" name="submit" value="Wyślij" onclick="adduser(this)"/>   
             </div>
         </form>
         <div id="messageBox"></div>
