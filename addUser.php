@@ -16,5 +16,14 @@ $name = $_POST['name'];
 $mail = $_POST['mail'];
 $passwd = test_input($_POST['passwd']);
 
+$query= "INSERT INTO quizers (login, mail, passwd)
+VALUES ('$name',
+'$mail',
+'$passwd'
+    );";
+
+if( $result = $conn->query($query)) { echo "Dodano użytkownika!"; }
+else echo "Pojawił się błąd!";
+
 mysqli_close($conn);
 ?>
