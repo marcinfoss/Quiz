@@ -202,14 +202,14 @@
                 }
             if( hint3_shown) {
                 progressBar.style.width = "100%";
+                
                 clearInterval(timer1);
-                //myBar.style.display= "none";
+
             }
             if(!hint3_shown) {
                  gameTime++;
             }
 
-           // timer.innerHTML = "Time: " + gameTime/FPS;
             scoreDiv.innerHTML = "Punkty: "+ score + " za ostatnie pytanie: "+lastScore;
         }, 1000/FPS);
             }

@@ -40,7 +40,7 @@ VALUES ('$pytanie',
 
 if( $result = $conn->query($query)) { echo "Dodano pytanie!"; }
 else echo "Pojawił się błąd!";
-
+mysqli_close($conn);
 //echo "post: ".var_dump($_POST);
 
 function test_input($data) {
