@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width">
 
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/menu.css">
 
     <style type="text/css">
         .form-style{
@@ -98,9 +99,10 @@
         
         if(document.getElementById("passwd").value != document.getElementById("passwd2").value) {
              document.getElementById("messageBox").innerHTML = "Podane hasła różnią się!";
+             return;
         }
 
-        if (window.XMLHttpRequest) {
+        else if (window.XMLHttpRequest) {
             // code for IE7+, Firefox, Chrome, Opera, Safari
             xmlhttp = new XMLHttpRequest();
         } else {
@@ -122,12 +124,27 @@
         };
 
     }
+    function toggleResponsive() {
+        var x = document.getElementById("myTopnav");
+        if (x.className === "topnav") {
+            x.className += " responsive";
+        } else {
+            x.className = "topnav";
+        }
+    }   
     </script>
-
 </head>
 <body>
     <div class="wrapper" id="wrapper">
         <div class="header">Quizzer!</div>
+        <div class="topnav" id="myTopnav">
+            <a href="index.html">Home</a>
+            <a href="register.html">Zarejestruj się</a>
+            <a href="addQuestion.html">Dodaj pytanie</a>
+            <a href="javascript:void(0);" class="icon" onclick="toggleResponsive();">&#9776;</a>
+        </div> 
+
+                
         <form id="addUser">
             <div class="form-style">
                 <form>

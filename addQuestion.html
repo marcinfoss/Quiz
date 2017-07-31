@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width">
 
     <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/menu.css">
     <script>
 
 function addQuestion() {
@@ -33,12 +34,25 @@ function addQuestion() {
     };
 
 }
-
+function toggleResponsive() {
+    var x = document.getElementById("myTopnav");
+    if (x.className === "topnav") {
+        x.className += " responsive";
+    } else {
+        x.className = "topnav";
+    }
+} 
     </script>
   </head>
 <body>
 <div class="wrapper" id="wrapper">
     <div class="header">Quizzer!</div>
+    <div class="topnav" id="myTopnav">
+        <a href="index.html">Home</a>
+        <a href="register.html">Zarejestruj się</a>
+        <a href="addQuestion.html">Dodaj pytanie</a>
+        <a href="javascript:void(0);" class="icon" onclick="toggleResponsive();">&#9776;</a>
+    </div> 
         <form id="addQ">    
             <table>
                     <tr>

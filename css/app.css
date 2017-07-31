@@ -2,7 +2,7 @@ html, body {
     margin: 0;
     padding: 0;
     background-color: #236167;
-    color: #8a97a0;
+    color: #404040;
 
 }
 
@@ -11,10 +11,10 @@ html, body {
     width: 100%;
     font-size: 3em;
     background-color: #f4f7f8;
-    color: #8a97a0;
+    color: #404040;
     padding:10px;
    
-    border-radius: 10px;
+    border-radius: 10px 10px 0 0;
     text-align: center;
 }
 
@@ -28,7 +28,7 @@ html, body {
     width: 100%;
     font-size: 1em;
     background-color: #f4f7f8;
-    color: #8a97a0;
+    color: #404040;
     padding:10px;
 
     border-radius: 10px;
@@ -58,7 +58,7 @@ html, body {
     width: 100%;
     font-size: 1.5em;
     background-color: #f4f7f8;
-    color: #8a97a0;
+    color: #404040;
     padding:10px;
     border-radius: 10px;
 }
@@ -69,7 +69,7 @@ html, body {
     width: 100%;
     font-size: 1.5em;
     background-color: #f4f7f8;
-    color: #8a97a0;
+    color: #404040;
     padding:10px;
     border-radius: 10px;
 
@@ -95,7 +95,7 @@ html, body {
         border: 3px;
         border-color:#804715;
         border-style: solid;
-        color: #8a97a0;
+        color: #404040;
         border-radius:10px;
         flex:1;
 }
